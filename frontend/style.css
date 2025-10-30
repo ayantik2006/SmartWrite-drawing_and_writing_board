@@ -116,3 +116,23 @@ body {
     border-radius: 7px;
     outline: none;
 }
+
+#clear-all{
+    outline:none;
+    border-radius: 0.3rem;
+    background: #eb5e5e;
+    font-weight: bold;
+}
+#download{
+    border-radius: 0.4rem;
+    padding: 0.3rem;
+}
+#import-img{
+    display:none;
+}
+#import-img-label{
+    font-size: 1.04rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
+}

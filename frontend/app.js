@@ -5,6 +5,7 @@ const greenBox = document.getElementById("green-ink");
 const thicknessIndicator = document.querySelector("#ink-width div");
 const penWidthInput = document.querySelector("#ink-width input");
 const eraser = document.getElementById("eraser");
+const clearAll = document.getElementById("clear-all");
 
 thicknessIndicator.style.backgroundColor =
   localStorage.getItem("inkColor") || "black";
@@ -59,25 +60,25 @@ function draw(startX, startY, endX, endY, inkColor, penWidth) {
   ctx.stroke();
 }
 
-function erase(startX, startY, endX, endY, inkColor, penWidth){
-    ctx.beginPath();
-ctx.moveTo(startX, startY);
-ctx.lineTo(endX, endY);
-ctx.globalCompositeOperation = "destination-out"; // makes it erase
-ctx.lineWidth = 16;
-ctx.stroke();
-ctx.globalCompositeOperation = "source-over";
+function erase(startX, startY, endX, endY, inkColor, penWidth) {
+  ctx.beginPath();
+  ctx.moveTo(startX, startY);
+  ctx.lineTo(endX, endY);
+  ctx.globalCompositeOperation = "destination-out"; // makes it erase
+  ctx.lineWidth = 16;
+  ctx.stroke();
+  ctx.globalCompositeOperation = "source-over";
 }
 
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
-  
+
   const rect = canvas.getBoundingClientRect();
   const endX = e.clientX - rect.left;
   const endY = e.clientY - rect.top;
-  if(isErasing){
+  if (isErasing) {
     erase(startX, startY, endX, endY, inkColor, penWidth);
-    return
+    return;
   }
   draw(startX, startY, endX, endY, inkColor, penWidth);
 
@@ -87,7 +88,6 @@ canvas.addEventListener("mousemove", (e) => {
 
 canvas.addEventListener("mouseup", () => {
   isDrawing = false;
-  
 });
 
 canvas.addEventListener("mouseleave", () => {
@@ -140,11 +140,38 @@ eraser.addEventListener("click", () => {
   if (!isErasing) {
     eraser.style.border = "0.3rem solid";
     eraser.style.boxShadow = "0 0 10px";
-    isErasing=true;
-  }
-  else{
+    isErasing = true;
+  } else {
     eraser.style.border = "0rem solid";
     eraser.style.boxShadow = "0 0 0";
-    isErasing=false;
+    isErasing = false;
+  }
+});
+
+clearAll.addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+const download = document.getElementById("download");
+download.addEventListener("click", () => {
+  const canvas = document.getElementById("canvas");
+  const imageData = canvas.toDataURL("image/png");
+
+  const downloadLink = document.createElement("a");
+  downloadLink.href = imageData;
+  downloadLink.download = "SmartWrite-image.png";
+  downloadLink.click();
+});
+
+const importImage = document.getElementById("import-img");
+importImage.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const img = new Image();
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0); 
+      URL.revokeObjectURL(img.src); 
+    };
+    img.src = URL.createObjectURL(file); 
   }
 });
