@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>SmartWrite</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="options">
+      <div id="black-ink" class="inks"></div>
+      <div id="red-ink" class="inks"></div>
+      <div id="blue-ink" class="inks"></div>
+      <div id="green-ink" class="inks"></div>
+      <button id="eraser">
+        <i class="fa-solid fa-eraser"></i>
+      </button>
+      <div id="ink-width">
+        <p>Pen thickness</p>
+        <input type="range" min="1" max="10" step="1" value="3"/>
+        <div></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
