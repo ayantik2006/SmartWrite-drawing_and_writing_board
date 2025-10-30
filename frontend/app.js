@@ -59,12 +59,26 @@ function draw(startX, startY, endX, endY, inkColor, penWidth) {
   ctx.stroke();
 }
 
+function erase(startX, startY, endX, endY, inkColor, penWidth){
+    ctx.beginPath();
+ctx.moveTo(startX, startY);
+ctx.lineTo(endX, endY);
+ctx.globalCompositeOperation = "destination-out"; // makes it erase
+ctx.lineWidth = 16;
+ctx.stroke();
+ctx.globalCompositeOperation = "source-over";
+}
+
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
-
+  
   const rect = canvas.getBoundingClientRect();
   const endX = e.clientX - rect.left;
   const endY = e.clientY - rect.top;
+  if(isErasing){
+    erase(startX, startY, endX, endY, inkColor, penWidth);
+    return
+  }
   draw(startX, startY, endX, endY, inkColor, penWidth);
 
   startX = endX;
